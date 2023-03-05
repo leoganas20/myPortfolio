@@ -1,0 +1,138 @@
+﻿@inherits LayoutComponentBase
+@inject NavigationManager nav
+<PageTitle>ganas_studio</PageTitle>
+<MudThemeProvider/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
+@using Microsoft.AspNetCore.Components.Web;
+
+ 
+<header>
+
+    <div class="wrapper" >
+        <nav>
+           
+
+            <div class="logo">
+                LG.
+            </div>
+            <ul>
+                <li>
+                    <a href="#" @onclick="@(() => MoveOut(20))">About Me</a>
+                </li>
+                <li>
+                    <a href="#" @onclick="@(() => MoveUp(200))">Work Experience</a>
+                </li>
+                <li>
+                    <a href="#">Skills</a>
+                </li>
+                 <li>
+                    <a href="#">Hobbies</a>
+                </li>
+                <li>
+                    <a @onclick="@(() => OpenDialog())" class="btn dark">Email Me</a>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="hero-section">
+            <div class="left">
+                <h1 style="@floatto">.NET Developer</h1>
+                <p style="@fading; position: relative">
+                    I am a qualified and productive web developer with a passion on
+                    making responsive websites. Adept in C#, Blazor WebAssemblyServerSide, .Net Entity Framework Core, Microsoft Sql Server, HTML
+                    and CSS. I am also dedicated on learning additional languages and
+                    technologies, for now I am seeking a career were I could effectively
+                    apply my skills and knowledge in my field of expertise.
+                </p>
+                <div style="@workexperience; position: absolute; top: 80px;">
+                    <section>
+                      
+                        <div>
+                            <MudTimeline>
+                                <MudTimelineItem Color="Color.Primary">
+                                    <div class="work-card" style="width: 300px;">
+                                        <h6 style="font-weight: bold">
+                                            FULL STACK WEB DEVELOPER.<br />
+                                            BLAZOR WEBASSEMBLY
+                                        </h6>
+                                        <h5>Provincial Government of Misamis Oriental</h5>
+                                        <h5>May, 2021 - Present</h5>
+                                    </div>
+                                </MudTimelineItem>
+                                <MudTimelineItem Color="Color.Primary">
+                                    <MudText Style="margin-left: -160px;" Align="Align.End">
+                                      <div class="work-card" style="width: 300px;">
+                                        <h6 style="font-weight: bold">
+                                                DIGITIZATION PROJECT. <br/>
+                                                TEAM LEADER
+                                        </h6>
+                                            <h5>Software Venture International</h5>
+                                            <h5>January - August, 2020</h5>
+                                    </div>
+                                    </MudText>
+                                </MudTimelineItem>
+                                <MudTimelineItem Color="Color.Primary">
+                                    <div class="work-card" style="width: 300px;">
+                                        <h6 style="font-weight: bold">
+                                            FULL STACK WEB DEVELOPER. <br/>
+                                            BLAZOR SERVER-SIDE
+                                        </h6>
+                                        <h5>Department of Social Welfare and Development</h5>
+                                        <h5>January – December, 2020</h5>
+                                    </div>
+                                </MudTimelineItem>
+                            </MudTimeline>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            <div class="right">
+                <img src="@($"{nav.BaseUri}images/img-profile-pic.png")" />
+            </div>
+        </div>
+    </div>
+</header>
+
+
+
+@code{
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    string floatto = "";
+    string fading = "";
+    string workexperience = "transform: translateX({100}px); opacity: 0; transition: transform 0.4s ease-in, opacity 0.3s ease-in;";
+    private void MoveUp(int distance)
+    {
+        floatto = $"transform: translateY({-distance}px); transition: transform 0.5s linear;";
+
+        fading = $"transform: translateY({-distance}px); opacity: 0; transition: transform 0.4s ease-out, opacity 0.3s ease-out;";
+
+        workexperience = $"transform: translateX({100}px); opacity: 1; transition: transform 0.4s ease-in, opacity 0.3s ease-in;";
+    }
+
+    private void MoveOut(int distance)
+    {
+        floatto = $"transform: translateY({distance}px); transition: transform 0.5s linear;";
+
+        fading = $"transform: translateY({distance}px); opacity: 1; transition: transform 0.4s ease-in, opacity 0.3s ease-in;";
+
+        workexperience = $"transform: translateX({100}px); opacity: 0; transition: transform 0.4s ease-in, opacity 0.3s ease-in;";
+    }
+
+    private async Task OpenDialog()
+    {
+       
+       try
+        {
+            await JSRuntime.InvokeAsync<object>("open", "https://mail.google.com/mail/?view=cm&to=leoganas.jr@gmail.com");
+        }
+        catch (Exception)
+        {
+            
+             
+        }
+    }
+
+}
